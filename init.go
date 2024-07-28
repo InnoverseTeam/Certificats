@@ -4,56 +4,41 @@ import (
 	"encoding/pem"
 	"fmt"
 	"io/ioutil"
+	"os"
 )
 
-func PemToDer(pemPath string) ([]byte, error) {
+func pemToDer(pemPath string, derPath string) error {
 	pemData, err := ioutil.ReadFile(pemPath)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	block, _ := pem.Decode(pemData)
 	if block == nil {
-		return nil, fmt.Errorf("failed to parse PEM block from file: %s", pemPath)
+		return fmt.Errorf("failed to decode PEM block")
 	}
 
-	return block.Bytes, nil
-}
+	derData := block.Bytes
 
-func WriteDer(derData []byte, derPath string) error {
-	return ioutil.WriteFile(derPath, derData, 0644)
+	err = ioutil.WriteFile(derPath, derData, 0644)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func initt() {
-	certPemPath := "innoversecert.pem"
-	keyPemPath := "innoversekey.pem"
-
-	certDerPath := "innoversecert.der"
-	keyDerPath := "innoversekey.der"
-
-	certDer, err := PemToDer(certPemPath)
-	if err != nil {
-		fmt.Printf("Error converting innoversecert.pem to DER: %v\n", err)
+	if len(os.Args) != 3 {
+		fmt.Println("Usage: pemtoder <input.pem> <output.der>")
 		return
 	}
 
-	err = WriteDer(certDer, certDerPath)
-	if err != nil {
-		fmt.Printf("Error writing innoversecert.der: %v\n", err)
-		return
-	}
+	inputPath := os.Args[1]
+	outputPath := os.Args[2]
 
-	keyDer, err := PemToDer(keyPemPath)
+	err := pemToDer(inputPath, outputPath)
 	if err != nil {
-		fmt.Printf("Error converting innoversekey.pem to DER: %v\n", err)
-		return
+		fmt.Printf("Error converting PEM to DER: %v\n", err)
 	}
-
-	err = WriteDer(keyDer, keyDerPath)
-	if err != nil {
-		fmt.Printf("Error writing innoversekey.der: %v\n", err)
-		return
-	}
-
-	fmt.Println("Conversion from PEM to DER completed successfully!")
 }
