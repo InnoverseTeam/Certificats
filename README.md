@@ -1,5 +1,5 @@
-# Certificats3DS
-.der Certificats for Innoverse 3DS.
+# Certificats
+Certificats converter PEM to DER.
 
 ### Setup
 - Install [Go](https://go.dev/doc/install) and [git](https://git-scm.com/downloads), then clone this project.
