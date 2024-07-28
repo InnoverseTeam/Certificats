@@ -20,5 +20,7 @@ To compile using docker, you need to initialize the module, and you can run the 
 ```bash
 $ go mod init pemtoder
 $ docker build -t pemtoder .
-$ docker run -it --rm -v .:/app pemtoder
+$ docker run -it --rm -v "C:\Users\your-username\Desktop\Certificats3DS:/app" pemtoder /bin/bash
+$ ./pemtoder /app/innoversecert.pem /app/innoversecert.der
+$ ./pemtoder /app/innoversekey.pem /app/innoversekey.der
 ```
