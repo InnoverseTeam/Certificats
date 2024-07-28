@@ -1,6 +1,8 @@
 # Certificats
 Certificats converter PEM to DER.
 
+## Compiling
+
 ### Setup
 - Install [Go](https://go.dev/doc/install) and [git](https://git-scm.com/downloads), then clone this project.
 ```bash
