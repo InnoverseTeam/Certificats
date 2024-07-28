@@ -14,3 +14,11 @@ To compile using go, you need to initialize the module, and you can run the proj
 $ go mod init pemtoder
 $ go run .
 ```
+
+### Compiling using Docker
+To compile using docker, you need to initialize the module, and you can run the project.
+```bash
+$ go mod init pemtoder
+$ docker build -t pemtoder .
+$ docker run -it --rm -v .:/app pemtoder
+```
